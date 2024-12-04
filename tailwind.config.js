@@ -5,7 +5,16 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        inter: "Inter",
+      poppins: "Poppins",
+      },
+      colors:{
+        primary: '#28AE4E'
+      }
+      
+    },
   },
   plugins: [
     require('daisyui'),
