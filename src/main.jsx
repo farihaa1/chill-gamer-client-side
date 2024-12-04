@@ -10,44 +10,49 @@ import RegisterPage from "./Pages/RegisterPage.jsx";
 import AllReviewsPage from "./Pages/AllReviewsPage.jsx";
 import AddReviewPage from "./Pages/AddReviewPage.jsx";
 import GameWatchListPage from "./Pages/GameWatchlistPage.jsx";
+import { ThemeProvider } from "./providers/ThemeContext.jsx";
+import AuthProviders from "./providers/AuthProviders.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
     errorElement: <ErrorPage></ErrorPage>,
-    children:[
+    children: [
       {
-        path: '/',
-        element:<HomePage></HomePage>,
+        path: "/",
+        element: <HomePage></HomePage>,
       },
       {
-        path: '/all-review',
-        element:<AllReviewsPage></AllReviewsPage>,
+        path: "/all-review",
+        element: <AllReviewsPage></AllReviewsPage>,
       },
       {
-        path: '/add-review',
+        path: "/add-review",
         element: <AddReviewPage></AddReviewPage>,
       },
       {
-        path: '/wish-list',
-        element: <GameWatchListPage></GameWatchListPage> ,
+        path: "/wish-list",
+        element: <GameWatchListPage></GameWatchListPage>,
       },
       {
-        path: '/login',
-        element:<LoginPage></LoginPage>,
+        path: "/login",
+        element: <LoginPage></LoginPage>,
       },
       {
-        path: '/register',
-        element:<RegisterPage></RegisterPage>,
+        path: "/register",
+        element: <RegisterPage></RegisterPage>,
       },
-    ]
+    ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router}>
-    </RouterProvider>
+    <AuthProviders>
+      <ThemeProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </ThemeProvider>
+    </AuthProviders>
   </StrictMode>
 );

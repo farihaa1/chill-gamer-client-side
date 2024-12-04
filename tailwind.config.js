@@ -8,16 +8,15 @@ export default {
     extend: {
       fontFamily: {
         inter: "Inter",
-      poppins: "Poppins",
+        poppins: "Poppins",
       },
-      colors:{
-        primary: '#28AE4E'
-      }
-      
+      colors: {
+        primary: '#28AE4E',
+      },
     },
   },
   plugins: [
     require('daisyui'),
   ],
+  darkMode: 'class', // Enable class-based dark mode
 }
-

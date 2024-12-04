@@ -31,7 +31,7 @@ const BannerSlider = () => {
         backgroundImage: `url('https://i.ibb.co/wwVjHZb/banner-1.jpg')`,
       }}
     >
-      <div className='bg-black bg-opacity-50'>
+      <div className='bg-[#1a202c] bg-opacity-50 dark:bg-opacity-60'>
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={50}
