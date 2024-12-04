@@ -3,10 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
 
 const RegisterPage = () => {
-
-
-  const {createUser} = useContext(AuthContext)
-
+  const { createUser } = useContext(AuthContext);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -15,12 +12,27 @@ const RegisterPage = () => {
     const email = form.email.value;
     const photo = form.photo.value;
     const password = form.password.value;
-    const user = {name, email, photo, password};
+    const user = { name, email, photo, password };
     console.log(user);
 
     createUser(email, password)
-    .then(res=>res.user)
-    .catch(err=>console.log('error', err))
+      .then((res) => {
+        console.log(res.user);
+
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+
+          body: JSON.stringify(user),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data, "data of user");
+          });
+      })
+      .catch((err) => console.log("error", err));
   };
   return (
     <div className="hero min-h-screen">

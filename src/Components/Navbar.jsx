@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { ImCross } from "react-icons/im";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProviders";
 
 const Navbar = () => {
+
+  const {user, logout } = useContext(AuthContext);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -13,6 +17,17 @@ const Navbar = () => {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+const handleLogout= ()=>{
+  logout()
+  .then(() => {
+    console.log("User logged out successfully.");
+  })
+  .catch((error) => {
+    console.error("Logout error:", error.message);
+  });
+}
+
+  
 
   const links = (
     <>
@@ -65,18 +80,27 @@ const Navbar = () => {
 
   const rightLinks = (
     <>
-      <div className="space-x-2">
+      {
+        user ? <div>
+       
+          <button onClick={handleLogout} className="bg-orange-600 text-white md:text-lg px-5 py-2 rounded-xl">
+            Log Out
+          </button>
+       
+        </div> : <div>
+        <div className="space-x-2">
         <NavLink to="/login">
-          <button className="bg-orange-600 text-base md:text-lg px-5 py-2 rounded-xl">
+          <button className="bg-orange-600 text-white md:text-lg px-5 py-2 rounded-xl">
             Login
           </button>
         </NavLink>
         <NavLink to="/register">
-          <button className="bg-orange-600 text-base md:text-lg px-5 py-2 rounded-xl">
+          <button className="bg-orange-600 text-white md:text-lg px-5 py-2 rounded-xl">
             Register
           </button>
         </NavLink>
-      </div>
+      </div></div>
+      }
     </>
   );
 

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../providers/AuthProviders";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { AuthContext } from "../providers/AuthProviders";
 
 const AddReviewPage = () => {
   const { user } = useContext(AuthContext);
@@ -135,7 +135,7 @@ const AddReviewPage = () => {
             onChange={handleChange}
             required
             min="1"
-            max="100"
+            max="10"
             className="w-full px-3 py-2 dark:text-gray-500 border rounded input input-bordered"
           />
         </div>
@@ -178,7 +178,7 @@ const AddReviewPage = () => {
           </select>
         </div>
 
-        {/* <div>
+        <div>
           <label className="block font-medium mb-1" htmlFor="email">
             User Email
           </label>
@@ -189,9 +189,9 @@ const AddReviewPage = () => {
             readOnly
             className="w-full px-3 py-2 dark:text-gray-500 border rounded input input-bordered bg-gray-100"
           />
-        </div> */}
+        </div>
 
-        {/* <div>
+        <div>
           <label className="block font-medium mb-1" htmlFor="name">
             User Name
           </label>
@@ -202,7 +202,7 @@ const AddReviewPage = () => {
             readOnly
             className="w-full px-3 py-2 dark:text-gray-500 border rounded input input-bordered bg-gray-100"
           />
-        </div> */}
+        </div>
 
         <button
           type="submit"
