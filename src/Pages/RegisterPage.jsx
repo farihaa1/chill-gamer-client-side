@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
+import Swal from "sweetalert2";
 
 const RegisterPage = () => {
-  const { createUser } = useContext(AuthContext);
+const navigate = useNavigate();
+
+  const { createUser, user, updatedUserProfile } = useContext(AuthContext);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -12,39 +15,82 @@ const RegisterPage = () => {
     const email = form.email.value;
     const photo = form.photo.value;
     const password = form.password.value;
-    const user = { name, email, photo, password };
-    console.log(user);
+    const newUser = { name, email, photo, password };
+    console.log(newUser, "new user");
+    console.log(user, "user");
 
     createUser(email, password)
       .then((res) => {
-        console.log(res.user);
+        const createdUser = res.user;
+        console.log(createdUser, "created")
 
-        fetch("http://localhost:5000/users", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-
-          body: JSON.stringify(user),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data, "data of user");
+        
+        updatedUserProfile({ displayName: name, photoURL: photo })
+          .then(() => {
+           
+            const newUser = { name, email, photo };
+            fetch("http://localhost:5000/users", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(newUser),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.insertedId) {
+                  Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Registration successful!",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                  form.reset();
+                  navigate("/login"); // Redirect to login page after successful registration
+                } else {
+                  throw new Error("User not inserted into the database");
+                }
+              })
+              .catch((err) => {
+                console.error("Database error:", err);
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "Could not save user data. Please try again later.",
+                });
+              });
+          })
+          .catch((error) => {
+            console.error("Error updating profile:", error);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Could not update profile. Please try again.",
+            });
           });
       })
-      .catch((err) => console.log("error", err));
+      .catch((err) => {
+        console.error("Firebase error:", err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Could not create user. Please check your credentials.",
+        });
+      });
   };
+
   return (
-    <div className="hero min-h-screen">
+    <div className="hero min-h-screen pt-12">
       <div className="hero-content flex-col">
         <div className="text-center">
           <h1 className="text-4xl font-bold">Register - Chill Gamer</h1>
-          <p className="py-6 w-8/12 mx-auto ">
+          <p className="py-6 w-8/12 mx-auto">
             Join the Chill Gamer community to share your reviews, discover new
-            games, and connect with fellow gamers{" "}
+            games, and connect with fellow gamers.
           </p>
         </div>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+        <div className="card w-full max-w-sm shrink-0 shadow-2xl">
           <form onSubmit={handleRegister} className="card-body">
             <div className="form-control">
               <label className="label">
@@ -52,7 +98,7 @@ const RegisterPage = () => {
               </label>
               <input
                 type="text"
-                placeholder="name"
+                placeholder="Name"
                 name="name"
                 className="input input-bordered"
                 required
@@ -65,7 +111,7 @@ const RegisterPage = () => {
               <input
                 type="email"
                 name="email"
-                placeholder="email"
+                placeholder="Email"
                 className="input input-bordered"
                 required
               />
@@ -89,7 +135,7 @@ const RegisterPage = () => {
               <input
                 type="password"
                 name="password"
-                placeholder="password"
+                placeholder="Password"
                 className="input input-bordered"
                 required
               />

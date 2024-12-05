@@ -68,11 +68,11 @@ const AddReviewPage = () => {
   };
 
   return (
-    <div className=" max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto px-4 py-8">
+    <div className=" max-w-2xl md:max-w-3xl  mx-auto px-4 py-8">
       <h2 className="text-3xl font-bold mb-6 text-center">
         Add New Game Review
       </h2>
-      <p className="text-base text-gray-600 dark:text-base-300 mb-6 text-center px-3">
+      <p className="text-base text-gray-600 max-w-xl mx-auto dark:text-base-300 mb-6 text-center px-3">
         Share your thoughts about your favorite games! Fill out the form below
         to provide details like the game title, your review, rating, and more.
         Your input helps others discover great games.

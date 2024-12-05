@@ -31,13 +31,13 @@ const BannerSlider = () => {
         backgroundImage: `url('https://i.ibb.co/wwVjHZb/banner-1.jpg')`,
       }}
     >
-      <div className='bg-[#1a202c] bg-opacity-50 dark:bg-opacity-60'>
+      <div className='bg-gradient-to-b from-[#1a202c] to-[#222a3571] dark:bg-gradient-to-b dark:from-[#1a202c] dark:to-[#222a3584]'>
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={50}
         slidesPerView={1}
         pagination={{ clickable: true }}
-        autoplay={{ delay: 3000 }}
+        autoplay={{ delay: 5000 }}
         loop={true}
         className="absolute inset-0"
       >

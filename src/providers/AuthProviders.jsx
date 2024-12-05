@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { auth } from "../firebase.init";
 
 const AuthContext = createContext(null);
@@ -25,6 +25,20 @@ const AuthProviders = ({ children }) => {
     return signOut(auth);
   };
 
+  const updatedUserProfile = ({ displayName, photoURL }) => {
+    if (auth.currentUser) {
+      setLoading(true);
+      return updateProfile(auth.currentUser, { displayName, photoURL })
+        .then(() => setLoading(false))
+        .catch((error) => {
+          console.error("Error updating profile: ", error);
+          setLoading(false);
+        });
+    } else {
+      return Promise.reject(new Error("No user is currently logged in."));
+    }
+  };
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
@@ -41,7 +55,8 @@ const AuthProviders = ({ children }) => {
     setUser,
     createUser,
     loginUser,
-    logout
+    logout,
+    updatedUserProfile
   };
 
   return (
