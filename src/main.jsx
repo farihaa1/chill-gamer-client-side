@@ -16,6 +16,7 @@ import AuthProviders from "./providers/AuthProviders.jsx";
 import ReviewDetails from "./Components/ReviewDetails.jsx";
 import MyReviews from "./Pages/MyReviews.jsx";
 import DbProviders from "./providers/DbProviders.jsx";
+import UpdateReview from "./Components/UpdateReview.jsx";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,11 @@ const router = createBrowserRouter([
       {
         path: "/my-reviews",
         element: <MyReviews></MyReviews>,
+        },
+      {
+        path: "/update-Review/:id",
+        element: <UpdateReview></UpdateReview>,
+        loader: ({params})=> fetch(`http://localhost:5000/review/${params.id}`)
         },
     ],
   },

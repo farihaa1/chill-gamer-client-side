@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProviders";
 import { DbContext } from "../providers/DbProviders";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const MyReviews = () => {
   const { user, loading } = useContext(AuthContext);
@@ -9,9 +11,8 @@ const MyReviews = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Show loading spinner for 1-2 seconds
     const timer = setTimeout(() => {
-      setIsLoading(false); // Stop loading after 2 seconds
+      setIsLoading(false);
     }, 2000);
 
     if (review && user) {
@@ -19,23 +20,48 @@ const MyReviews = () => {
       setUserReviews(filteredReviews);
     }
 
-    return () => clearTimeout(timer); // Cleanup the timer
+    return () => clearTimeout(timer);
   }, [review, user]);
 
   const handleDelete = (reviewId) => {
-    const updatedReviews = userReviews.filter((rev) => rev._id !== reviewId);
-    setUserReviews(updatedReviews);
-  };
-
-  const handleUpdate = (reviewId) => {
-    console.log(`Updating review with ID: ${reviewId}`);
+    // const updatedReviews = userReviews.filter((rev) => rev._id !== reviewId);
+    // setUserReviews(updatedReviews);
+    console.log(reviewId);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/review/${reviewId}`, {
+            method: 'DELETE',
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.deletedCount > 0) {
+                Swal.fire({
+                  title: "Deleted!",
+                  text: "Your review has been deleted.",
+                  icon: "success",
+                });
+                const remaining = userReviews.filter((rev) => rev._id !== reviewId);
+                setUserReviews(remaining); // Update state with remaining reviews
+              }
+            })
+            .catch((error) => console.error("Delete failed", error));
+          
+      }
+    });
   };
 
   return (
     <div>
       <h1>{user ? `${user.displayName}'s Reviews` : "My Reviews"}</h1>
 
-      {/* Show loading spinner for 1-2 seconds */}
       {isLoading ? (
         <div className="flex justify-center items-center min-h-screen">
           <span className="loading loading-ring text-blue-800 w-44 h-34"></span>
@@ -60,15 +86,15 @@ const MyReviews = () => {
                   <td>{review.description.slice(0, 60) + "..."}</td>
                   <td>{review.rating}</td>
                   <td>
-                    <button
-                      onClick={() => handleUpdate(review._id)}
-                      className="btn btn-primary btn-sm mr-2"
+                    <Link
+                      to = {`/update-Review/${review._id}`}
+                      className="px-4 py-2 rounded-lg bg-primary text-base-100 mr-2"
                     >
                       Update
-                    </button>
+                    </Link>
                     <button
                       onClick={() => handleDelete(review._id)}
-                      className="btn btn-danger btn-sm"
+                      className="px-4 py-2 rounded-lg bg-orange-600 text-base-100 "
                     >
                       Delete
                     </button>
