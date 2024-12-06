@@ -1,53 +1,73 @@
-import React, { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
-import { auth } from "../firebase.init";
+import { createContext, useEffect, useState } from "react";
+import {
+  signOut,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+  updateProfile,
+  sendPasswordResetEmail,
+} from "firebase/auth";
+import auth from "../firebase.init";
 
-const AuthContext = createContext(null);
+export const AuthContext = createContext();
 
 const AuthProviders = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const googleProvider = new GoogleAuthProvider();
 
   const createUser = (email, password) => {
-    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password).finally(() => {
       setLoading(false);
     });
   };
 
   const loginUser = (email, password) => {
-    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   const logout = () => {
-    setLoading(true);
     return signOut(auth);
   };
 
-  const updatedUserProfile = ({ displayName, photoURL }) => {
-    if (auth.currentUser) {
-      setLoading(true);
-      return updateProfile(auth.currentUser, { displayName, photoURL })
-        .then(() => setLoading(false))
-        .catch((error) => {
-          console.error("Error updating profile: ", error);
-          setLoading(false);
-        });
-    } else {
-      return Promise.reject(new Error("No user is currently logged in."));
+  const handleGoogleLogin = () => {
+    return signInWithPopup(auth, googleProvider);
+  };
+
+  const updateUserProfile = async (name, image) => {
+    try {
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+        photoURL: image,
+      });
+      setUser((prevUser) => ({
+        ...prevUser,
+        displayName: name,
+        photoURL: image,
+      }));
+    } catch (error) {
+      throw error;
     }
   };
 
+  const resetPassword = async (email) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+      return "Password reset email sent!";
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-      setUser(currentUser);
+    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser || null);
       setLoading(false);
     });
-    return () => unsubscribe();
+    return () => unSubscribe();
   }, []);
-
 
   const userInfo = {
     user,
@@ -56,13 +76,24 @@ const AuthProviders = ({ children }) => {
     createUser,
     loginUser,
     logout,
-    updatedUserProfile
+    updateUserProfile,
+    resetPassword,
+    setLoading,
+    handleGoogleLogin
   };
 
   return (
-    <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={userInfo}>
+    
+      {loading ? (
+        <div className="flex justify-center items-center min-h-screen">
+          <span className="loading loading-ring text-blue-800 w-44 h-34"></span>
+        </div>
+      ) : (
+        children
+      )}
+    </AuthContext.Provider>
   );
 };
 
-export { AuthContext };
 export default AuthProviders;

@@ -4,9 +4,9 @@ import { AuthContext } from "../providers/AuthProviders";
 import Swal from "sweetalert2";
 
 const RegisterPage = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const { createUser, user, updatedUserProfile } = useContext(AuthContext);
+  const { createUser, user, updateUserProfile } = useContext(AuthContext);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -22,13 +22,16 @@ const navigate = useNavigate();
     createUser(email, password)
       .then((res) => {
         const createdUser = res.user;
-        console.log(createdUser, "created")
+        console.log(createdUser, "created");
 
-        
-        updatedUserProfile({ displayName: name, photoURL: photo })
+        updateUserProfile(name, photo)
           .then(() => {
-           
-            const newUser = { name, email, photo };
+            const newUser = {
+              name,
+              email,
+              photo,
+            };
+            console.log(newUser)
             fetch("http://localhost:5000/users", {
               method: "POST",
               headers: {
@@ -38,6 +41,7 @@ const navigate = useNavigate();
             })
               .then((response) => response.json())
               .then((data) => {
+                console.log("data created on db", data);
                 if (data.insertedId) {
                   Swal.fire({
                     position: "center",
@@ -47,7 +51,7 @@ const navigate = useNavigate();
                     timer: 1500,
                   });
                   form.reset();
-                  navigate("/login"); // Redirect to login page after successful registration
+                  navigate("/");
                 } else {
                   throw new Error("User not inserted into the database");
                 }

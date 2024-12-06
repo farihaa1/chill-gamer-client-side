@@ -1,14 +1,15 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../providers/AuthProviders";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const UpdateProfile = () => {
-  const { user, updateUserProfile, updateUserEmail } = useContext(AuthContext); // Context functions for updates
+  const { user, updateUserProfile } = useContext(AuthContext); // Context functions for updates
   const [updatedUser, setUpdatedUser] = useState({
     name: user?.displayName || "",
-    email: user?.email || "",
     photo: user?.photoURL || "",
   });
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -18,25 +19,20 @@ const UpdateProfile = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    const { name, email, photo } = updatedUser;
+    const { name, photo } = updatedUser;
 
     try {
-      // Update user profile (displayName, photoURL)
-      await updateUserProfile({ displayName: name, photoURL: photo });
+    
+      await updateUserProfile(name, photoURL);
 
-      // Update user email if it has changed
-      if (user.email !== email) {
-        await updateUserEmail(email);
-      }
 
-      // Update user information in MongoDB (if required)
-      const response = await fetch(`http://localhost:5000/users/${user.uid}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedUser),
-      });
+      // const response = await fetch(`http://localhost:5000/users/${user.id}`, {
+      //   method: "PUT",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(updatedUser),
+      // });
 
       const data = await response.json();
       if (data.modifiedCount > 0) {
@@ -47,6 +43,7 @@ const UpdateProfile = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+        navigate("/");
       }
     } catch (err) {
       Swal.fire({
@@ -79,19 +76,7 @@ const UpdateProfile = () => {
                 required
               />
             </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={updatedUser.email}
-                onChange={handleInputChange}
-                className="input input-bordered"
-                required
-              />
-            </div>
+            
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Photo URL</span>

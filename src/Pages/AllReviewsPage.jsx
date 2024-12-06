@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
+import { DbContext } from "../providers/DbProviders";
 
 const AllReviewsPage = () => {
+  const { review, setReview }=useContext(DbContext);
   const reviews = useLoaderData();
-  console.log(reviews);
+  useEffect(() => {
+    if (reviews) {
+      setReview(reviews);
+    }
+  }, []);
+  console.log(review)
   return (
     <div className="grid grid-cols-3 justify-center items-center gap-3">
       {reviews.map((review) => (

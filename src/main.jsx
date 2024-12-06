@@ -14,6 +14,8 @@ import GameWatchListPage from "./Pages/GameWatchListPage.jsx";
 import { ThemeProvider } from "./providers/ThemeContext.jsx";
 import AuthProviders from "./providers/AuthProviders.jsx";
 import ReviewDetails from "./Components/ReviewDetails.jsx";
+import MyReviews from "./Pages/MyReviews.jsx";
+import DbProviders from "./providers/DbProviders.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,9 +37,11 @@ const router = createBrowserRouter([
         element: <AddReviewPage></AddReviewPage>,
       },
       {
-        path: "/wish-list",
+        path: "/watch-list",
         element: <GameWatchListPage></GameWatchListPage>,
       },
+      
+      
       {
         path: "/login",
         element: <LoginPage></LoginPage>,
@@ -47,14 +51,15 @@ const router = createBrowserRouter([
         element: <RegisterPage></RegisterPage>,
       },
       {
-        path: "/update-profile",
+        path: "/update-profile/:id",
         element: <UpdateProfile></UpdateProfile> ,
+        loader: ({params})=> fetch(`http://localhost:5000/users/${params.id}`),
       },
+      
       {
-        path: "/review-details/:id",
-        element: <ReviewDetails></ReviewDetails>,
-        loader: ({params})=>fetch(`http://localhost:5000/review/${params.id}`)
-      },
+        path: "/my-reviews",
+        element: <MyReviews></MyReviews>,
+        },
     ],
   },
 ]);
@@ -62,9 +67,11 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProviders>
+      <DbProviders>
       <ThemeProvider>
         <RouterProvider router={router}></RouterProvider>
       </ThemeProvider>
+      </DbProviders>
     </AuthProviders>
   </StrictMode>
 );

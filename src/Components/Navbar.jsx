@@ -1,31 +1,34 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ImCross } from "react-icons/im";
-import { Link, NavLink, useLoaderData, useParams } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
+import { DbContext } from "../providers/DbProviders";
 
 const Navbar = () => {
-  const { id } = useParams();
   const { user, logout } = useContext(AuthContext);
+  // const { review, setReview } = useContext(DbContext);
+  console.log("navbar");
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
-  console.log(user)
-  
-  
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-  const toggleProfile = () => {
-    setIsProfileOpen(!isProfileOpen);
-  };
 
-  const closeProfile = () => {
-    setIsProfileOpen(false);
-  };
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
+  const [userInfo, setUserInfo] = useState(null);
+
+  // useEffect(() => {
+  //   if (user) {
+  //     fetch(`http://localhost:5000/users/${user._id}`)
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         setUserInfo(data);
+  //       })
+  //       .catch((error) => console.error("Error fetching user info:", error));
+  //   }
+  // }, [user]);
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleProfile = () => setIsProfileOpen(!isProfileOpen);
+  const closeProfile = () => setIsProfileOpen(false);
+  const closeMenu = () => setIsMenuOpen(false);
   const handleLogout = () => {
     logout()
       .then(() => {
@@ -73,7 +76,7 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          to="/wish-list"
+          to="/watch-list"
           className={({ isActive }) =>
             isActive ? "text-orange-500 font-bold" : ""
           }
@@ -82,6 +85,15 @@ const Navbar = () => {
           Game WatchList
         </NavLink>
       </li>
+      <NavLink
+        to='/my-reviews'
+        className={({ isActive }) =>
+          isActive ? "text-orange-500 font-bold" : ""
+        }
+        onClick={closeMenu}
+      >
+        My Reviews
+      </NavLink>
     </>
   );
 
@@ -95,7 +107,10 @@ const Navbar = () => {
           >
             <img
               className="w-full rounded-full"
-              src={userInfo?.photoURL || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+              src={
+                user?.photoURL ||
+                "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+              }
               alt="User Profile"
             />
           </div>
