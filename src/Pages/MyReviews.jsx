@@ -24,8 +24,6 @@ const MyReviews = () => {
   }, [review, user]);
 
   const handleDelete = (reviewId) => {
-    // const updatedReviews = userReviews.filter((rev) => rev._id !== reviewId);
-    // setUserReviews(updatedReviews);
     console.log(reviewId);
     Swal.fire({
       title: "Are you sure?",
@@ -59,17 +57,17 @@ const MyReviews = () => {
   };
 
   return (
-    <div>
-      <h1>{user ? `${user.displayName}'s Reviews` : "My Reviews"}</h1>
+    <div className="w-11/12 mx-auto my-12">
+      <h1 className="text-center mb-8 text-2xl font-bold">My Reviews</h1>
 
       {isLoading ? (
         <div className="flex justify-center items-center min-h-screen">
           <span className="loading loading-ring text-blue-800 w-44 h-34"></span>
         </div>
       ) : userReviews.length > 0 ? (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto w-11/12 mx-auto">
           <table className="table">
-            <thead>
+            <thead className="dark:text-gray-400">
               <tr>
                 <th>#</th>
                 <th>Game Name</th>

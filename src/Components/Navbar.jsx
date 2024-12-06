@@ -103,10 +103,10 @@ const Navbar = () => {
         <div>
           <div
             onClick={toggleProfile}
-            className="w-12 lg:w-14 rounded-full cursor-pointer"
+            className="rounded-full w-12 h-12 cursor-pointer"
           >
             <img
-              className="w-full rounded-full"
+              className="w-12 h-12 object-cover rounded-full"
               src={
                 user?.photoURL ||
                 "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
