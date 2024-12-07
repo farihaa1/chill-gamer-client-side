@@ -17,6 +17,7 @@ import ReviewDetails from "./Components/ReviewDetails.jsx";
 import MyReviews from "./Pages/MyReviews.jsx";
 import DbProviders from "./providers/DbProviders.jsx";
 import UpdateReview from "./Components/UpdateReview.jsx";
+import PrivateRoute from "./Components/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -39,10 +40,13 @@ const router = createBrowserRouter([
       },
       {
         path: "/watch-list",
-        element: <GameWatchListPage></GameWatchListPage>,
+        element: (
+          <PrivateRoute>
+            <GameWatchListPage></GameWatchListPage>
+          </PrivateRoute>
+        ),
+        loader: ()=> fetch("http://localhost:5000/watchList")
       },
-      
-      
       {
         path: "/login",
         element: <LoginPage></LoginPage>,
@@ -53,17 +57,29 @@ const router = createBrowserRouter([
       },
       {
         path: "/update-profile/:id",
-        element: <UpdateProfile></UpdateProfile> ,
+        element: (
+          <PrivateRoute>
+             <UpdateProfile></UpdateProfile>
+          </PrivateRoute>
+        ) ,
         loader: ({params})=> fetch(`http://localhost:5000/users/${params.id}`),
       },
       
       {
         path: "/my-reviews",
-        element: <MyReviews></MyReviews>,
+        element: (
+          <PrivateRoute>
+            <MyReviews></MyReviews>
+          </PrivateRoute>
+        ),
         },
       {
         path: "/update-Review/:id",
-        element: <UpdateReview></UpdateReview>,
+        element: (
+          <PrivateRoute>
+            <UpdateReview></UpdateReview>
+          </PrivateRoute>
+        ),
         loader: ({params})=> fetch(`http://localhost:5000/review/${params.id}`)
         },
         {
