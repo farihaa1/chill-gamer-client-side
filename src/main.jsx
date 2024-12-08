@@ -36,7 +36,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/add-review",
-        element: <AddReviewPage></AddReviewPage>,
+        element: <PrivateRoute>
+          <AddReviewPage></AddReviewPage>
+        </PrivateRoute>,
       },
       {
         path: "/watch-list",

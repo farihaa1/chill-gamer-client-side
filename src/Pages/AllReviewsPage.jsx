@@ -3,20 +3,33 @@ import { useLoaderData, NavLink } from "react-router-dom";
 import { DbContext } from "../providers/DbProviders";
 import { Typewriter } from "react-simple-typewriter";
 import { Fade } from "react-awesome-reveal";
+import { AuthContext } from "../providers/AuthProviders";
 
 const AllReviewsPage = () => {
-  const { review, setReview } = useContext(DbContext);
-  const reviews = useLoaderData();
+  const { review } = useContext(DbContext);
+  const { loading, setLoading } = useContext(AuthContext);
+
   const [sortedReviews, setSortedReviews] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [sortOption, setSortOption] = useState("none");
 
+  // Set loading state when review data is not available
   useEffect(() => {
-    if (reviews) {
-      setReview(reviews);
-      setSortedReviews(reviews);
+    if (!review) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+      setSortedReviews(review);
     }
-  }, [reviews, setReview]);
+  }, [review, setLoading]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="loading loading-ring text-blue-800 w-32 h-32"></span>
+      </div>
+    );
+  }
 
   const sortReviews = (option) => {
     let sortedArray = [...sortedReviews];
@@ -35,9 +48,9 @@ const AllReviewsPage = () => {
   const filterByGenre = (genre) => {
     setSelectedGenre(genre);
     if (genre === "") {
-      setSortedReviews(reviews);
+      setSortedReviews(review); 
     } else {
-      setSortedReviews(reviews.filter((review) => review.genre === genre));
+      setSortedReviews(review.filter((review) => review.genre === genre));
     }
   };
 
@@ -50,7 +63,7 @@ const AllReviewsPage = () => {
     filterByGenre(e.target.value);
   };
 
-  const genres = [...new Set(reviews.map((review) => review.genre))]; // Get unique genres
+  const genres = [...new Set(review.map((review) => review.genre))]; // Get unique genres
 
   return (
     <div className="w-11/12 mx-auto my-12 md:my-12 pb-10">
@@ -70,14 +83,12 @@ const AllReviewsPage = () => {
 
       <div className="flex justify-center mb-6 relative">
         <div className="dropdown">
-          <label htmlFor="sort" className="btn bg-primary text-white">
-            Sort By
-          </label>
+          <label className="btn bg-primary text-white">Sort By</label>
           <select
             id="sort"
             value={sortOption}
             onChange={handleSortChange}
-            className="select select-primary border-primary mt-2 w-full max-w-xs"
+            className="select select-primary border-primary mt-2 w-full max-w-xs dark:text-gray-600"
           >
             <option value="none">Select Sort Option</option>
             <option value="rating-asc">Rating: Low to High</option>
@@ -88,14 +99,12 @@ const AllReviewsPage = () => {
         </div>
 
         <div className="dropdown ml-4">
-          <label htmlFor="genre" className="btn bg-primary text-white">
-            Filter By Genre
-          </label>
+          <label className="btn bg-primary text-white">Filter By Genre</label>
           <select
             id="genre"
             value={selectedGenre}
             onChange={handleGenreChange}
-            className="select select-primary border-primary active:border-primary mt-2 w-full max-w-xs"
+            className="select select-primary border-primary mt-2 w-full max-w-xs dark:text-gray-600"
           >
             <option value="">All Genres</option>
             {genres.map((genre, index) => (
@@ -121,12 +130,11 @@ const AllReviewsPage = () => {
                 />
               </figure>
               <div className="flex flex-col items-start justify-evenly pt-3">
-                <h2 className="card-title mt-2 mr-3 text-gray-800">
-                  {review.title}:
-                </h2>
+                <h2 className="card-title mt-2 mr-3 text-gray-800">{review.title}:</h2>
                 <p className="text-gray-800 text-start bg-orange-400 px-2 rounded-lg my-2">
                   {review.genre}
                 </p>
+                <p className="text-gray-800 text-start"> Year: {review.year}</p>
                 <p className="text-gray-700 mt-2">{review.description.slice(0, 100)}.....</p>
                 <div className="card-actions">
                   <div className="bg-primary text-white px-3 rounded-xl mt-4 py-2">

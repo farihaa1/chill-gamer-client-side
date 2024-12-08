@@ -4,7 +4,6 @@ import { AuthContext } from "./AuthProviders";
 export const DbContext = createContext();
 
 const DbProviders = ({ children }) => {
-  //   const [dbUser, setDbUser] = useState([]);
   const [review, setReview] = useState([]);
   const { loading } = useContext(AuthContext);
 
@@ -17,8 +16,8 @@ const DbProviders = ({ children }) => {
     }
   }, [review, setReview]);
   const dbInfo = {
-    // dbUser,
-    // setDbUser,
+
+ 
     review,
     setReview,
   };

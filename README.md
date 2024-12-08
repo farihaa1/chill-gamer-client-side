@@ -5,11 +5,11 @@
 ---
 
 ##  Live Site
-Visit the live application here: [Chill Gamer](https://your-live-site-url.com)
+Visit the live application here: [Chill Gamer](https://chill-gamers.web.app/all-review)
 ## client-side code GitHub repository
-Visit the live application here: [Chill Gamer](https://your-live-site-url.com)
+Visit the live application here: [Chill Gamer](https://github.com/programming-hero-web-course2/b10-a10-client-side-farihaa1)
 ## server-side code GitHub repository
-Visit the live application here: [Chill Gamer](https://your-live-site-url.com)
+Visit the live application here: [Chill Gamer](https://github.com/programming-hero-web-course2/b10-a10-server-side-farihaa1)
 
 ---
 
