@@ -186,7 +186,7 @@ const Navbar = () => {
         </button>
 
         <Link to="/" className="text-xl lg:text-2xl font-bold font-poppins">
-          Chill Gamer
+          Chill <span className="text-orange-500 "> Gamer</span>
         </Link>
       </div>
 

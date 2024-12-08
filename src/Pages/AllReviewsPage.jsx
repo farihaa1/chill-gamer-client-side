@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useLoaderData, NavLink } from "react-router-dom";
+import { useLoaderData, NavLink } from "react-router-dom";
 import { DbContext } from "../providers/DbProviders";
 import { Typewriter } from "react-simple-typewriter";
 import { Fade } from "react-awesome-reveal";
@@ -35,7 +35,7 @@ const AllReviewsPage = () => {
   const filterByGenre = (genre) => {
     setSelectedGenre(genre);
     if (genre === "") {
-      setSortedReviews(reviews); 
+      setSortedReviews(reviews);
     } else {
       setSortedReviews(reviews.filter((review) => review.genre === genre));
     }
@@ -55,9 +55,9 @@ const AllReviewsPage = () => {
   return (
     <div className="w-11/12 mx-auto my-12 md:my-12 pb-10">
       <div className="text-center mb-16">
-        <h1 className="text-4xl font-bold ">
+        <h1 className="text-4xl font-bold">
           <Typewriter
-            words={["All Reviews", "Discover the Best Games!", "Share Your Thoughts!"]}
+            words={["All Reviews", "Discover the Best Games!", "Share Your Thoughts with Us!"]}
             loop={true}
             cursor
             cursorStyle="_"
@@ -67,7 +67,7 @@ const AllReviewsPage = () => {
           />
         </h1>
       </div>
-      
+
       <div className="flex justify-center mb-6 relative">
         <div className="dropdown">
           <label htmlFor="sort" className="btn bg-primary text-white">
@@ -109,7 +109,7 @@ const AllReviewsPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-6">
         {sortedReviews.map((review) => (
-          <Fade key={review._id} duration={1000}> {/* Add Fade animation here */}
+          <Fade key={review._id} duration={1000}>
             <div
               className="w-11/12 mx-auto md:w-full bg-base-100 h-[680px] md:h-[730px] shadow-xl p-4 rounded-xl flex flex-col items-start"
             >
@@ -132,8 +132,10 @@ const AllReviewsPage = () => {
                   <div className="bg-primary text-white px-3 rounded-xl mt-4 py-2">
                     <NavLink
                       to={`/review-details/${review._id}`}
-                      className={({ isActive }) => 
-                        isActive ? "bg-orange-500 text-white rounded-lg p-2" : "bg-primary text-white px-3 rounded-xl mt-4 py-2"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "bg-orange-500 text-white rounded-lg p-2"
+                          : "bg-primary text-white px-3 rounded-xl mt-4 py-2"
                       }
                     >
                       Explore Details
@@ -142,7 +144,7 @@ const AllReviewsPage = () => {
                 </div>
               </div>
             </div>
-          </Fade> 
+          </Fade>
         ))}
       </div>
     </div>

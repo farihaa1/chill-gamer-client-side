@@ -3,6 +3,7 @@ import BannerSlider from '../Components/HomeComponents/BannerSlider';
 import TopRatedReviews from '../Components/TopRatedReviews';
 import UpcomingGamesSection from '../Components/HomeComponents/UpcomingGamesSection.jsx';
 import AboutUs from '../Components/HomeComponents/AboutUs';
+import ChillGameComments from '../Components/ChillGameComments.jsx';
 
 const HomePage = () => {
     return (
@@ -14,6 +15,9 @@ const HomePage = () => {
             </section>
             <section>
                 <UpcomingGamesSection></UpcomingGamesSection>
+            </section>
+            <section>
+                <ChillGameComments></ChillGameComments>
             </section>
             <section>
                 <AboutUs></AboutUs>

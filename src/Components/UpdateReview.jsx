@@ -49,7 +49,7 @@ const UpdateReview = () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5000/review/${_id}`, {
+            const response = await fetch(`https://chill-gamer-server-side-jet.vercel.app/review/${_id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

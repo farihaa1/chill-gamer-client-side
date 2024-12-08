@@ -13,7 +13,7 @@ const ReviewDetails = () => {
   useEffect(() => {
     if (!user) return;
 
-    fetch(`http://localhost:5000/watchList?userEmail=${user.email}`)
+    fetch(`https://chill-gamer-server-side-jet.vercel.app/watchList?userEmail=${user.email}`)
       .then((response) => response.json())
       .then((watchList) => {
         const isAlreadyAdded = watchList.some((item) => item.reviewId === _id);
@@ -40,7 +40,7 @@ const ReviewDetails = () => {
       username: user.username,
     };
 
-    fetch("http://localhost:5000/watchList", {
+    fetch("https://chill-gamer-server-side-jet.vercel.app/watchList", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

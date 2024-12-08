@@ -32,7 +32,7 @@ const router = createBrowserRouter([
       {
         path: "/all-review",
         element: <AllReviewsPage></AllReviewsPage>,
-        loader: ()=>fetch('http://localhost:5000/review'),
+        loader: ()=>fetch('https://chill-gamer-server-side-jet.vercel.app/review'),
       },
       {
         path: "/add-review",
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
             <GameWatchListPage></GameWatchListPage>
           </PrivateRoute>
         ),
-        loader: ()=> fetch("http://localhost:5000/watchList")
+        loader: ()=> fetch("https://chill-gamer-server-side-jet.vercel.app/watchList")
       },
       {
         path: "/login",
@@ -62,7 +62,7 @@ const router = createBrowserRouter([
              <UpdateProfile></UpdateProfile>
           </PrivateRoute>
         ) ,
-        loader: ({params})=> fetch(`http://localhost:5000/users/${params.id}`),
+        loader: ({params})=> fetch(`https://chill-gamer-server-side-jet.vercel.app/users/${params.id}`),
       },
       
       {
@@ -80,12 +80,12 @@ const router = createBrowserRouter([
             <UpdateReview></UpdateReview>
           </PrivateRoute>
         ),
-        loader: ({params})=> fetch(`http://localhost:5000/review/${params.id}`)
+        loader: ({params})=> fetch(`https://chill-gamer-server-side-jet.vercel.app/review/${params.id}`)
         },
         {
           path:'/review-details/:id',
           element: <ReviewDetails></ReviewDetails>,
-          loader: ({params})=> fetch(`http://localhost:5000/review-details/${params.id}`)
+          loader: ({params})=> fetch(`https://chill-gamer-server-side-jet.vercel.app/review-details/${params.id}`)
 
         }
     ],

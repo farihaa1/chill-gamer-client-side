@@ -26,7 +26,7 @@ const UpdateProfile = () => {
       await updateUserProfile(name, photoURL);
 
 
-      // const response = await fetch(`http://localhost:5000/users/${user.id}`, {
+      // const response = await fetch(`https://chill-gamer-server-side-jet.vercel.app/users/${user.id}`, {
       //   method: "PUT",
       //   headers: {
       //     "Content-Type": "application/json",

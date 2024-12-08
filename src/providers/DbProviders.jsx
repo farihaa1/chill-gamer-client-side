@@ -1,17 +1,16 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import { AuthContext } from './AuthProviders';
+import React, { createContext, useState, useEffect, useContext } from "react";
+import { AuthContext } from "./AuthProviders";
 
 export const DbContext = createContext();
 
 const DbProviders = ({ children }) => {
-//   const [dbUser, setDbUser] = useState([]); 
-  const [review, setReview] = useState([]); 
-  const {loading} = useContext(AuthContext)
+  //   const [dbUser, setDbUser] = useState([]);
+  const [review, setReview] = useState([]);
+  const { loading } = useContext(AuthContext);
 
- 
   useEffect(() => {
     if (review.length === 0) {
-      fetch('http://localhost:5000/review')
+      fetch("https://chill-gamer-server-side-jet.vercel.app/review")
         .then((response) => response.json())
         .then((data) => setReview(data))
         .catch((error) => console.error("Failed to fetch reviews", error));
@@ -26,7 +25,7 @@ const DbProviders = ({ children }) => {
 
   return (
     <DbContext.Provider value={dbInfo}>
-       {loading ? (
+      {loading ? (
         <div className="flex justify-center items-center min-h-screen">
           <span className="loading loading-ring text-blue-800 w-44 h-34"></span>
         </div>

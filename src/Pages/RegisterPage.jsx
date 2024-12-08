@@ -39,7 +39,7 @@ const RegisterPage = () => {
             const newUser = { name, email, photo };
             console.log("Updating database with user:", newUser);
 
-            fetch("http://localhost:5000/users", {
+            fetch("https://chill-gamer-server-side-jet.vercel.app/users", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(newUser),

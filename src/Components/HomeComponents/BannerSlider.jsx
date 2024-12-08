@@ -1,9 +1,7 @@
 import React from 'react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Fade } from 'react-awesome-reveal';  // Importing Fade for animation
-import { Typewriter } from 'react-simple-typewriter';  // Importing Typewriter for title animation
-
+import { Fade } from 'react-awesome-reveal'; 
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
