@@ -103,7 +103,7 @@ const MyReviews = () => {
           </table>
         </div>
       ) : (
-        <div className="flex justify-center items-center min-h-screen">
+        <div className="flex justify-center  min-h-screen">
           <p>You haven't added any reviews yet.</p>
         </div>
       )}

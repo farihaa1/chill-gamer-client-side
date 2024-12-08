@@ -1,23 +1,33 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
 import Swal from "sweetalert2";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-
   const { createUser, user, updateUserProfile } = useContext(AuthContext);
+
+  const [loading, setLoading] = useState(false);
 
   const handleRegister = (e) => {
     e.preventDefault();
+    setLoading(true);
     const form = e.target;
     const name = form.name.value;
     const email = form.email.value;
     const photo = form.photo.value;
     const password = form.password.value;
-    const newUser = { name, email, photo, password };
-    console.log(newUser, "new user");
-    console.log(user, "user");
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      Swal.fire({
+        icon: "warning",
+        title: "Weak Password",
+        text: "Password must contain at least one uppercase letter, one lowercase letter, and be at least 6 characters long.",
+      });
+      setLoading(false);
+      return;
+    }
 
     createUser(email, password)
       .then((res) => {
@@ -26,22 +36,18 @@ const RegisterPage = () => {
 
         updateUserProfile(name, photo)
           .then(() => {
-            const newUser = {
-              name,
-              email,
-              photo,
-            };
-            console.log(newUser)
+            const newUser = { name, email, photo };
+            console.log("Updating database with user:", newUser);
+
             fetch("http://localhost:5000/users", {
               method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify(newUser),
             })
               .then((response) => response.json())
               .then((data) => {
-                console.log("data created on db", data);
+                console.log("User saved to database:", data);
+
                 if (data.insertedId) {
                   Swal.fire({
                     position: "center",
@@ -53,7 +59,7 @@ const RegisterPage = () => {
                   form.reset();
                   navigate("/");
                 } else {
-                  throw new Error("User not inserted into the database");
+                  throw new Error("Failed to save user to database");
                 }
               })
               .catch((err) => {
@@ -63,7 +69,8 @@ const RegisterPage = () => {
                   title: "Oops...",
                   text: "Could not save user data. Please try again later.",
                 });
-              });
+              })
+              .finally(() => setLoading(false));
           })
           .catch((error) => {
             console.error("Error updating profile:", error);
@@ -72,6 +79,7 @@ const RegisterPage = () => {
               title: "Oops...",
               text: "Could not update profile. Please try again.",
             });
+            setLoading(false);
           });
       })
       .catch((err) => {
@@ -81,6 +89,7 @@ const RegisterPage = () => {
           title: "Oops...",
           text: "Could not create user. Please check your credentials.",
         });
+        setLoading(false);
       });
   };
 
@@ -145,7 +154,13 @@ const RegisterPage = () => {
               />
             </div>
             <div className="form-control mt-6">
-              <button className="btn bg-primary text-white">Register</button>
+              <button
+                type="submit"
+                className={`btn bg-primary text-white ${loading ? "loading" : ""}`}
+                disabled={loading}
+              >
+                {loading ? "Registering..." : "Register"}
+              </button>
             </div>
             <label className="label">
               <p className="text-center">
