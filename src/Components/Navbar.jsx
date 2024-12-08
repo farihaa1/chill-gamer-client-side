@@ -1,34 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { ImCross } from "react-icons/im";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
-import { DbContext } from "../providers/DbProviders";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
-  // const { review, setReview } = useContext(DbContext);
-  console.log("navbar");
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-
-  const [userInfo, setUserInfo] = useState(null);
-
-  // useEffect(() => {
-  //   if (user) {
-  //     fetch(`http://localhost:5000/users/${user._id}`)
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         setUserInfo(data);
-  //       })
-  //       .catch((error) => console.error("Error fetching user info:", error));
-  //   }
-  // }, [user]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleProfile = () => setIsProfileOpen(!isProfileOpen);
   const closeProfile = () => setIsProfileOpen(false);
   const closeMenu = () => setIsMenuOpen(false);
+
   const handleLogout = () => {
     logout()
       .then(() => {
@@ -155,15 +139,21 @@ const Navbar = () => {
       ) : (
         <div>
           <div className="space-x-2">
-            <NavLink to="/login">
-              <button className="bg-orange-600 text-white md:text-lg px-5 py-2 rounded-xl">
-                Login
-              </button>
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                isActive ? "bg-orange-500 text-gray-100  md:text-lg px-5 py-2 rounded-xl " : "bg-orange-600  text-white md:text-lg px-5 py-2 rounded-xl"
+              }
+            >
+              Login
             </NavLink>
-            <NavLink to="/register">
-              <button className="bg-orange-600 text-white md:text-lg px-5 py-2 rounded-xl">
-                Register
-              </button>
+            <NavLink
+              to="/register"
+              className={({ isActive }) =>
+                isActive ? "bg-orange-500 text-gray-100  md:text-lg px-5 py-2 rounded-xl " : "bg-orange-600  text-white md:text-lg px-5 py-2 rounded-xl"
+              }
+            >
+              Register
             </NavLink>
           </div>
         </div>

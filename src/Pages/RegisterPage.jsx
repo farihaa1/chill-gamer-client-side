@@ -94,7 +94,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="hero min-h-screen pt-12">
+    <div className="hero min-h-screen pt-12 pb-12">
       <div className="hero-content flex-col">
         <div className="text-center">
           <h1 className="text-4xl font-bold">Register - Chill Gamer</h1>

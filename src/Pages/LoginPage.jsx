@@ -92,7 +92,7 @@ const LoginPage = () => {
             <p>OR</p>
             <button
               onClick={handleGoogleSignIn}
-              className="btn  border-primary mt-2"
+              className="btn  mb-6 mt-2"
               disabled={loading}
             >
               {loading ? "Signing in..." : "Sign in with Google"}
