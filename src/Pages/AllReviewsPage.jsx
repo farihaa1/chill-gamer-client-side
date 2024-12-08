@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useLoaderData, NavLink } from "react-router-dom";
 import { DbContext } from "../providers/DbProviders";
-import { Typewriter } from 'react-simple-typewriter';
+import { Typewriter } from "react-simple-typewriter";
+import { Fade } from "react-awesome-reveal";
 
 const AllReviewsPage = () => {
   const { review, setReview } = useContext(DbContext);
@@ -67,7 +68,7 @@ const AllReviewsPage = () => {
         </h1>
       </div>
       
-      <div className="flex justify-center  mb-6 relative">
+      <div className="flex justify-center mb-6 relative">
         <div className="dropdown">
           <label htmlFor="sort" className="btn bg-primary text-white">
             Sort By
@@ -106,42 +107,42 @@ const AllReviewsPage = () => {
         </div>
       </div>
 
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-6">
         {sortedReviews.map((review) => (
-          <div
-            key={review._id}
-            className="w-11/12 mx-auto md:w-full bg-base-100 h-[680px] md:h-[730px] shadow-xl p-4 rounded-xl flex flex-col items-start"
-          >
-            <figure className="w-full h-2/3">
-              <img
-                className="w-full h-full object-cover rounded-xl"
-                src={review.coverImage}
-                alt={review.title}
-              />
-            </figure>
-            <div className="flex flex-col items-start justify-evenly pt-3">
-              <h2 className="card-title mt-2 mr-3 text-gray-800">
-                {review.title}:
-              </h2>
-              <p className="text-gray-800 text-start bg-orange-400 px-2 rounded-lg my-2">
-                {review.genre}
-              </p>
-              <p className="text-gray-700 mt-2">{review.description.slice(0, 100)}.....</p>
-              <div className="card-actions">
-                <div className="bg-primary text-white px-3 rounded-xl mt-4 py-2">
-                  <NavLink
-                    to={`/review-details/${review._id}`}
-                    className={({ isActive }) => 
-                      isActive ? "bg-orange-500 text-white rounded-lg p-2" : "bg-primary text-white px-3 rounded-xl mt-4 py-2"
-                    }
-                  >
-                    Explore Details
-                  </NavLink>
+          <Fade key={review._id} duration={1000}> {/* Add Fade animation here */}
+            <div
+              className="w-11/12 mx-auto md:w-full bg-base-100 h-[680px] md:h-[730px] shadow-xl p-4 rounded-xl flex flex-col items-start"
+            >
+              <figure className="w-full h-2/3">
+                <img
+                  className="w-full h-full object-cover rounded-xl"
+                  src={review.coverImage}
+                  alt={review.title}
+                />
+              </figure>
+              <div className="flex flex-col items-start justify-evenly pt-3">
+                <h2 className="card-title mt-2 mr-3 text-gray-800">
+                  {review.title}:
+                </h2>
+                <p className="text-gray-800 text-start bg-orange-400 px-2 rounded-lg my-2">
+                  {review.genre}
+                </p>
+                <p className="text-gray-700 mt-2">{review.description.slice(0, 100)}.....</p>
+                <div className="card-actions">
+                  <div className="bg-primary text-white px-3 rounded-xl mt-4 py-2">
+                    <NavLink
+                      to={`/review-details/${review._id}`}
+                      className={({ isActive }) => 
+                        isActive ? "bg-orange-500 text-white rounded-lg p-2" : "bg-primary text-white px-3 rounded-xl mt-4 py-2"
+                      }
+                    >
+                      Explore Details
+                    </NavLink>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </Fade> 
         ))}
       </div>
     </div>

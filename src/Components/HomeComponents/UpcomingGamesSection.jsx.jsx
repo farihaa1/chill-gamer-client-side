@@ -1,4 +1,6 @@
 import React from "react";
+import { Fade } from 'react-awesome-reveal';  // Importing Fade for animation
+import { Typewriter } from 'react-simple-typewriter';  // Importing Typewriter for text animation
 
 const UpcomingGamesSection = () => {
   const games = [
@@ -35,26 +37,34 @@ const UpcomingGamesSection = () => {
   ];
 
   return (
-    <section className="upcoming-games-section  py-10">
+    <section className="upcoming-games-section py-10">
       <div className="container mx-auto">
-        <h2 className="text-2xl font-bold text-center mb-8 md:text-3xl lg:text-4xl lg:mb-12">Upcoming Games</h2>
+        <h2 className="text-2xl font-bold text-center mb-8 md:text-3xl lg:text-4xl lg:mb-12">
+          <Typewriter
+            words={["Upcoming Games", "Exciting New Releases!", "Get Ready for the Future of Gaming!"]}
+            loop={true}
+            cursor
+            cursorStyle="_"
+            typeSpeed={100}
+            deleteSpeed={50}
+            delaySpeed={1500}
+          />
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {games.map((game, index) => (
-            <div
-              key={index} // Use index as the key since there's no unique ID in the array
-              className="game-card bg-white shadow-md rounded-lg p-4 transition-transform transform hover:scale-105"
-            >
-              <img
-                src={game.coverImage}
-                alt={game.title}
-                className="w-full h-48 object-cover rounded-md"
-              />
-              <h3 className="text-lg  mt-4 text-gray-700 font-semibold">{game.title}</h3>
-              <p className="text-sm text-gray-600 mt-1">
-                Release Date: {new Date(game.releaseDate).toLocaleDateString()}
-              </p>
-             
-            </div>
+            <Fade key={index} duration={1000}>
+              <div className="game-card bg-white shadow-md rounded-lg p-4 transition-transform transform hover:scale-105">
+                <img
+                  src={game.coverImage}
+                  alt={game.title}
+                  className="w-full h-48 object-cover rounded-md"
+                />
+                <h3 className="text-lg mt-4 text-gray-700 font-semibold">{game.title}</h3>
+                <p className="text-sm text-gray-600 mt-1">
+                  Release Date: {new Date(game.releaseDate).toLocaleDateString()}
+                </p>
+              </div>
+            </Fade>
           ))}
         </div>
       </div>

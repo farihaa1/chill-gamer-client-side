@@ -1,5 +1,8 @@
+import React from 'react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Fade } from 'react-awesome-reveal';  // Importing Fade for animation
+import { Typewriter } from 'react-simple-typewriter';  // Importing Typewriter for title animation
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -22,7 +25,7 @@ const BannerSlider = () => {
           title: "Enjoy the Best Reviews",
           description: "Read honest, in-depth reviews from gamers just like you! Our community shares their real experiences with the games, from gameplay mechanics to graphics and storyline. Make informed decisions before purchasing your next game, and find out what the experts and players are saying!"
         },
-      ];
+    ];
 
   return (
     <div
@@ -32,30 +35,32 @@ const BannerSlider = () => {
       }}
     >
       <div className='bg-gradient-to-b from-[#1a202c] to-[#222a3571] dark:bg-gradient-to-b dark:from-[#1a202c] dark:to-[#222a3584]'>
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={50}
-        slidesPerView={1}
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 5000 }}
-        loop={true}
-        className="absolute inset-0"
-      >
-        {slides.map((slide) => (
-          <SwiperSlide key={slide.id}>
-            <div className="flex items-center justify-center w-full  text-center px-6 py-4 h-[460px] md:h-[500px] md:py-10">
-              <div>
-                <h2 className="text-white text-2xl lg:text-5xl font-bold mb-2 transition-transform duration-300 hover:scale-105">
-                  {slide.title}
-                </h2>
-                <p className="text-white text-xs lg:text-base opacity-90 transition-opacity duration-300 hover:opacity-100 max-w-4xl my-4">
-                  {slide.description}
-                </p>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={50}
+          slidesPerView={1}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 5000 }}
+          loop={true}
+          className="absolute inset-0"
+        >
+          {slides.map((slide) => (
+            <SwiperSlide key={slide.id}>
+              <Fade duration={1000}>
+                <div className="flex items-center justify-center w-full text-center px-6 py-4 h-[460px] md:h-[500px] md:py-10">
+                  <div>
+                    <h2 className="text-white text-2xl lg:text-5xl font-bold mb-2 transition-transform duration-300 hover:scale-105">
+                    {slide.title}
+                    </h2>
+                    <p className="text-white text-xs lg:text-base opacity-90 transition-opacity duration-300 hover:opacity-100 max-w-4xl my-4">
+                      {slide.description}
+                    </p>
+                  </div>
+                </div>
+              </Fade>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </div>
   );
