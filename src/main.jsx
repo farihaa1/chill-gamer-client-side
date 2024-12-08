@@ -7,7 +7,6 @@ import MainLayout from "./MainLayout.jsx";
 import HomePage from "./Pages/HomePage.jsx";
 import LoginPage from "./Pages/LoginPage.jsx";
 import RegisterPage from "./Pages/RegisterPage.jsx";
-import UpdateProfile from "./Components/UpdateProfile.jsx";
 import AllReviewsPage from "./Pages/AllReviewsPage.jsx";
 import AddReviewPage from "./Pages/AddReviewPage.jsx";
 import GameWatchListPage from "./Pages/GameWatchListPage.jsx";
@@ -57,15 +56,7 @@ const router = createBrowserRouter([
         path: "/register",
         element: <RegisterPage></RegisterPage>,
       },
-      {
-        path: "/update-profile/:id",
-        element: (
-          <PrivateRoute>
-             <UpdateProfile></UpdateProfile>
-          </PrivateRoute>
-        ) ,
-        loader: ({params})=> fetch(`https://chill-gamer-server-side-jet.vercel.app/users/${params.id}`),
-      },
+      
       
       {
         path: "/my-reviews",

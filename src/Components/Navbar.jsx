@@ -60,7 +60,7 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          to="/watch-list"
+          to="/watchList"
           className={({ isActive }) =>
             isActive ? "text-orange-500 font-bold" : ""
           }
@@ -120,12 +120,6 @@ const Navbar = () => {
                 <li className="py-1 pl-2">{user?.email || "No Email"}</li>
                 <hr />
 
-                <Link
-                  to="/update-profile"
-                  className="bg-orange-600 text-white md:text-lg px-5 py-2 rounded-xl"
-                >
-                  Update Profile
-                </Link>
                 <button
                   onClick={handleLogout}
                   className="bg-orange-600 text-white md:text-lg px-5 py-2 rounded-xl"

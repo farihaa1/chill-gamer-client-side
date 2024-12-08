@@ -6,7 +6,6 @@ const GameWatchListPage = () => {
   const watchListWithEmail = useLoaderData();
   const { user } = useContext(AuthContext);
 
-
   const filteredWatchList = watchListWithEmail.filter(
     (item) => item.userEmail === user?.email
   );
@@ -15,7 +14,7 @@ const GameWatchListPage = () => {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h2 className="text-3xl font-bold text-center mb-6">My Watch List</h2>
       {filteredWatchList.length === 0 ? (
-        <p className="text-center text-lg">Your watch list is empty.</p>
+        <p className="text-center text-lg text-red-500">You haven’t added anything to your watchlist yet.</p>
       ) : (
         <table className="min-w-full table-auto border-collapse">
           <thead>
@@ -41,7 +40,6 @@ const GameWatchListPage = () => {
                 <td className="px-4 py-2 border-b">{item.genre}</td>
                 <td className="px-4 py-2 border-b">{item.rating}</td>
                 <td className="px-4 py-2 border-b">{item.year}</td>
-               
               </tr>
             ))}
           </tbody>
