@@ -37,8 +37,8 @@ const UpcomingGamesSection = () => {
   ];
 
   return (
-    <section className="upcoming-games-section py-10">
-      <div className="container mx-auto">
+    <section className="container mx-auto px-4 py-10 md:px-6">
+      <div className="container mx-auto ">
         <h2 className="text-2xl font-bold text-center mb-8 md:text-3xl lg:text-4xl lg:mb-12">
           <Typewriter
             words={["Upcoming Games", "Exciting New Releases!", "Get Ready for the Future of Gaming!"]}

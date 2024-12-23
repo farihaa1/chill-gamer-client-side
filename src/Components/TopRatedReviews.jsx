@@ -21,7 +21,7 @@ const TopRatedReviews = () => {
   }, []);
 
   return (
-    <div className="w-11/12 mx-auto my-6 md:my-12 pb-10">
+    <div className="container mx-auto my-6 md:my-12 pb-10 md:px-6">
       <h2 className="text-center text-4xl md:text-5xl font-semibold my-16">
         <Typewriter
           words={["Highest Rated Games"]}
@@ -37,7 +37,7 @@ const TopRatedReviews = () => {
         {topRatedReviews.map((review) => (
           <div
             key={review._id}
-            className="w-11/12 mx-auto md:w-full bg-base-100 h-[700px] md:h-[740px] shadow-xl p-6 lg:p-8 rounded-xl flex flex-col items-start"
+            className="w-11/12 mx-auto md:w-full bg-base-100 h-[730px] md:h-[740px] shadow-xl p-6 lg:p-8 rounded-xl flex flex-col items-start"
           >
             <figure className="w-full h-2/3">
               <img
