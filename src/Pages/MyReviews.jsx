@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProviders";
-import { DbContext } from "../providers/DbProviders";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 const MyReviews = () => {
-  const { user, loading } = useContext(AuthContext);
-  const { review, setReview } = useContext(DbContext);
+  const { user} = useContext(AuthContext);
+const review = useLoaderData();
   const [userReviews, setUserReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -21,7 +20,7 @@ const MyReviews = () => {
     }
 
     return () => clearTimeout(timer);
-  }, [review, user]);
+  }, []);
 
   const handleDelete = (reviewId) => {
     console.log(reviewId);
@@ -57,7 +56,7 @@ const MyReviews = () => {
   };
 
   return (
-    <div className="w-11/12 mx-auto my-12">
+    <div className=" md:w-11/12 mx-auto my-12">
       <h1 className="text-center mb-8 text-2xl font-bold">My Reviews</h1>
 
       {isLoading ? (
@@ -65,7 +64,7 @@ const MyReviews = () => {
           <span className="loading loading-ring text-blue-800 w-44 h-34"></span>
         </div>
       ) : userReviews.length > 0 ? (
-        <div className="overflow-x-auto w-11/12 mx-auto">
+        <div className="overflow-x-auto md:w-11/12 mx-auto">
           <table className="table">
             <thead className="dark:text-gray-400">
               <tr>
@@ -83,16 +82,16 @@ const MyReviews = () => {
                   <td>{review.title}</td>
                   <td>{review.description.slice(0, 60) + "..."}</td>
                   <td>{review.rating}</td>
-                  <td>
+                  <td className="flex flex-col md:flex-row gap-2">
                     <Link
                       to = {`/update-Review/${review._id}`}
-                      className="px-4 py-2 rounded-lg bg-primary text-base-100 mr-2"
+                      className="px-2 md:px-4 py-2 rounded-lg bg-primary text-base-100 mr-2"
                     >
                       Update
                     </Link>
                     <button
                       onClick={() => handleDelete(review._id)}
-                      className="px-4 py-2 rounded-lg bg-orange-600 text-base-100 "
+                      className="px-1 md:px-4 py-2 rounded-lg bg-orange-600 text-base-100 "
                     >
                       Delete
                     </button>

@@ -5,11 +5,11 @@ import { Typewriter } from "react-simple-typewriter";
 const TopRatedReviews = () => {
   const [topRatedReviews, setTopRatedReviews] = useState([]);
 
-  // Fetch the top-rated reviews when the component mounts
+ 
   useEffect(() => {
     const fetchTopRatedReviews = async () => {
       try {
-        const response = await fetch("https://chill-gamer-server-side-jet.vercel.app/top-rated-reviews"); // URL to your backend
+        const response = await fetch("https://chill-gamer-server-side-jet.vercel.app/top-rated-reviews"); 
         const data = await response.json();
         setTopRatedReviews(data);
       } catch (error) {
@@ -37,7 +37,7 @@ const TopRatedReviews = () => {
         {topRatedReviews.map((review) => (
           <div
             key={review._id}
-            className="w-11/12 mx-auto md:w-full bg-base-100 h-[680px] md:h-[730px] shadow-xl p-6 lg:p-8 rounded-xl flex flex-col items-start"
+            className="w-11/12 mx-auto md:w-full bg-base-100 h-[700px] md:h-[740px] shadow-xl p-6 lg:p-8 rounded-xl flex flex-col items-start"
           >
             <figure className="w-full h-2/3">
               <img

@@ -5,7 +5,6 @@ import { AuthContext } from '../providers/AuthProviders';
 
 const UpdateReview = () => {
     const upReview = useLoaderData();
-    console.log("upReview:", upReview);
 
     const {_id, title, description, coverImage, genre, rating, year} = upReview;
 
@@ -21,7 +20,7 @@ const UpdateReview = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Initialize state with data when the component is mounted
+      
         setReview({
             coverImage,
             title,
@@ -30,9 +29,9 @@ const UpdateReview = () => {
             year,
             genre,
         });
-    }, [upReview]); // Ensure to update state when upReview changes
+    }, [upReview]); 
 
-    const genres = ["Action", "RPG", "Adventure", "Puzzle", "Shooter"]; // Add more genres as needed
+    const genres = ["Action", "RPG", "Adventure", "Puzzle", "Shooter"]; 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -71,7 +70,7 @@ const UpdateReview = () => {
                     year: "",
                     genre: "",
                 });
-                navigate("/all-review");
+                navigate("/my-reviews");
             } else {
                 throw new Error("Failed to submit review");
             }

@@ -3,22 +3,21 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <footer className="footer bg-base-300 text-base-content p-10">
+        <footer className="footer bg-blue-950 text-white p-10">
   <nav>
-    <h6 className="footer-title">Games</h6>
+    <h6 className="text-lg font-semibold text-gray-300">Games</h6>
     <Link to='/'className="link link-hover">Home</Link>
     <Link to='/login' className="link link-hover">Login</Link>
-    <Link className="link link-hover">Register</Link>
+    <Link to='/register' className="link link-hover">Register</Link>
   </nav>
   <nav>
-    <h6 className="footer-title">Company</h6>
-    <a className="link link-hover">About us</a>
-    <a className="link link-hover">Contact</a>
-    <a className="link link-hover">Jobs</a>
-    <a className="link link-hover">Press kit</a>
+    <h6 className="text-lg font-semibold text-gray-300">Company</h6>
+    <Link to='/add-review' className="link link-hover">Add review</Link>
+    <Link to='/watch-list' className="link link-hover">Game WatchList</Link>
+    <Link to='/my-reviews' className="link link-hover">My Reviews</Link>
   </nav>
   <nav>
-    <h6 className="footer-title">Social</h6>
+    <h6 className="text-lg font-semibold text-gray-300">Social</h6>
     <div className="grid grid-flow-col gap-4">
       <a>
         <svg

@@ -1,11 +1,13 @@
-# Chill Gamer 
+# Chill Gamer
+
+**Category: Camellia**
 
 **Chill Gamer** is a user-friendly game review platform designed to let users explore, share, and manage game reviews. This application emphasizes simplicity, responsiveness, and a seamless experience.
 
 ---
 
 ##  Live Site
-Visit the live application here: [Chill Gamer](https://chill-gamers.web.app/all-review)
+Visit the live application here: [Chill Gamer](https://chill-gamers.web.app)
 ## client-side code GitHub repository
 Visit the live application here: [Chill Gamer](https://github.com/programming-hero-web-course2/b10-a10-client-side-farihaa1)
 ## server-side code GitHub repository

@@ -32,12 +32,10 @@ const RegisterPage = () => {
     createUser(email, password)
       .then((res) => {
         const createdUser = res.user;
-        console.log(createdUser, "created");
 
         updateUserProfile(name, photo)
           .then(() => {
             const newUser = { name, email, photo };
-            console.log("Updating database with user:", newUser);
 
             fetch("https://chill-gamer-server-side-jet.vercel.app/users", {
               method: "POST",
@@ -46,7 +44,6 @@ const RegisterPage = () => {
             })
               .then((response) => response.json())
               .then((data) => {
-                console.log("User saved to database:", data);
 
                 if (data.insertedId) {
                   Swal.fire({

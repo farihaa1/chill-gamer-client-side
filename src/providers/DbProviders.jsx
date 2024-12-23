@@ -14,10 +14,8 @@ const DbProviders = ({ children }) => {
         .then((data) => setReview(data))
         .catch((error) => console.error("Failed to fetch reviews", error));
     }
-  }, [review, setReview]);
+  }, []);
   const dbInfo = {
-
- 
     review,
     setReview,
   };

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import Footer from "./Footer";
 import { AuthContext } from "../providers/AuthProviders";
 import Swal from "sweetalert2";
 
@@ -13,18 +12,18 @@ const ReviewDetails = () => {
   useEffect(() => {
     if (!user) return;
 
-    fetch(`https://chill-gamer-server-side-jet.vercel.app/watchList?userEmail=${user.email}`)
+    fetch(`https://chill-gamer-server-side-jet.vercel.app/watch-list?userEmail=${user.email}`)
       .then((response) => response.json())
       .then((watchList) => {
         const isAlreadyAdded = watchList.some((item) => item.reviewId === _id);
         setAddedToWatchList(isAlreadyAdded);
       })
-      .catch((error) => console.error("Error fetching watchlist:", error));
-  }, [user, _id]);
+      .catch((error) => console.error("Error fetching watch-list:", error));
+  }, []);
 
   const handleAddToWatchList = () => {
     if (!user) {
-      alert("Please log in to add to your watchlist!");
+      alert("Please log in to add to your watch-list!");
       return;
     }
 
@@ -40,7 +39,7 @@ const ReviewDetails = () => {
       username: user.username,
     };
 
-    fetch("https://chill-gamer-server-side-jet.vercel.app/watchList", {
+    fetch("https://chill-gamer-server-side-jet.vercel.app/watch-list", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -70,7 +69,7 @@ const ReviewDetails = () => {
   };
 
   return (
-    <div className="lg:my-12">
+    <div className="md:my-12 py-8">
       <h2 className="text-center text-3xl lg:text-4xl font-bold pb-4">Review Details</h2>
       <div className="w-11/12 mx-auto  lg:flex lg:justify-center lg:items-start my-12 gap-3">
         <figure className="md:px-6 md:py-6 lg:pt-6 min-w-[390px] h-[500px] lg:min-w-[730px] lg:h-[600px] bg-primary rounded-2xl">

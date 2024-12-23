@@ -1,19 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLoaderData, NavLink } from "react-router-dom";
-import { DbContext } from "../providers/DbProviders";
+import { NavLink, useLoaderData } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
 import { Fade } from "react-awesome-reveal";
 import { AuthContext } from "../providers/AuthProviders";
 
 const AllReviewsPage = () => {
-  const { review } = useContext(DbContext);
+  const review = useLoaderData();
   const { loading, setLoading } = useContext(AuthContext);
 
   const [sortedReviews, setSortedReviews] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
   const [sortOption, setSortOption] = useState("none");
 
-  // Set loading state when review data is not available
+
   useEffect(() => {
     if (!review) {
       setLoading(true);
@@ -21,7 +20,7 @@ const AllReviewsPage = () => {
       setLoading(false);
       setSortedReviews(review);
     }
-  }, [review, setLoading]);
+  }, []);
 
   if (loading) {
     return (
@@ -63,7 +62,7 @@ const AllReviewsPage = () => {
     filterByGenre(e.target.value);
   };
 
-  const genres = [...new Set(review.map((review) => review.genre))]; // Get unique genres
+  const genres = [...new Set(review.map((review) => review.genre))]; 
 
   return (
     <div className="w-11/12 mx-auto my-12 md:my-12 pb-10">
@@ -117,10 +116,10 @@ const AllReviewsPage = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-6">
-        {sortedReviews.map((review) => (
-          <Fade key={review._id} duration={1000}>
+        {sortedReviews.map((review, idx) => (
+          <Fade key={review._id || idx} duration={1000}>
             <div
-              className="w-11/12 mx-auto md:w-full bg-base-100 h-[680px] md:h-[730px] shadow-xl p-4 rounded-xl flex flex-col items-start"
+              className="w-11/12 mx-auto md:w-full bg-base-100 h-[700px] md:h-[750px] shadow-xl p-4 rounded-xl flex flex-col items-start"
             >
               <figure className="w-full h-2/3">
                 <img
@@ -129,13 +128,16 @@ const AllReviewsPage = () => {
                   alt={review.title}
                 />
               </figure>
-              <div className="flex flex-col items-start justify-evenly pt-3">
-                <h2 className="card-title mt-2 mr-3 text-gray-800">{review.title}:</h2>
-                <p className="text-gray-800 text-start bg-orange-400 px-2 rounded-lg my-2">
+              <div className="flex flex-col items-start justify-evenly pt-2">
+                <h2 className="card-title mt-1 text-gray-800">{review.title}:</h2>
+                <p className="text-gray-800 text-start bg-orange-400 px-3 rounded-lg my-2">
                   {review.genre}
                 </p>
+                <div className="flex gap-5">
                 <p className="text-gray-800 text-start"> Year: {review.year}</p>
-                <p className="text-gray-700 mt-2">{review.description.slice(0, 100)}.....</p>
+                <p className="text-gray-800 text-start"> Rating: {review.rating}</p>
+                </div>
+                <p className="text-gray-700 mt-2">{review.description?.slice(0, 100)}.....</p>
                 <div className="card-actions">
                   <div className="bg-primary text-white px-3 rounded-xl mt-4 py-2">
                     <NavLink

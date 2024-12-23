@@ -31,13 +31,15 @@ const router = createBrowserRouter([
       {
         path: "/all-review",
         element: <AllReviewsPage></AllReviewsPage>,
-        loader: ()=>fetch('https://chill-gamer-server-side-jet.vercel.app/review'),
+        loader: () => fetch("https://chill-gamer-server-side-jet.vercel.app/review"),
       },
       {
         path: "/add-review",
-        element: <PrivateRoute>
-          <AddReviewPage></AddReviewPage>
-        </PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <AddReviewPage></AddReviewPage>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/watch-list",
@@ -46,7 +48,7 @@ const router = createBrowserRouter([
             <GameWatchListPage></GameWatchListPage>
           </PrivateRoute>
         ),
-        loader: ()=> fetch("https://chill-gamer-server-side-jet.vercel.app/watchList")
+        
       },
       {
         path: "/login",
@@ -56,8 +58,7 @@ const router = createBrowserRouter([
         path: "/register",
         element: <RegisterPage></RegisterPage>,
       },
-      
-      
+
       {
         path: "/my-reviews",
         element: (
@@ -65,7 +66,8 @@ const router = createBrowserRouter([
             <MyReviews></MyReviews>
           </PrivateRoute>
         ),
-        },
+        loader: () => fetch("https://chill-gamer-server-side-jet.vercel.app/review"),
+      },
       {
         path: "/update-Review/:id",
         element: (
@@ -73,14 +75,15 @@ const router = createBrowserRouter([
             <UpdateReview></UpdateReview>
           </PrivateRoute>
         ),
-        loader: ({params})=> fetch(`https://chill-gamer-server-side-jet.vercel.app/review/${params.id}`)
-        },
-        {
-          path:'/review-details/:id',
-          element: <ReviewDetails></ReviewDetails>,
-          loader: ({params})=> fetch(`https://chill-gamer-server-side-jet.vercel.app/review-details/${params.id}`)
-
-        }
+        loader: ({ params }) =>
+          fetch(`https://chill-gamer-server-side-jet.vercel.app/review/${params.id}`),
+      },
+      {
+        path: "/review-details/:id",
+        element: <ReviewDetails></ReviewDetails>,
+        loader: ({ params }) =>
+          fetch(`https://chill-gamer-server-side-jet.vercel.app/review-details/${params.id}`),
+      },
     ],
   },
 ]);
@@ -89,9 +92,9 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProviders>
       <DbProviders>
-      <ThemeProvider>
-        <RouterProvider router={router}></RouterProvider>
-      </ThemeProvider>
+        <ThemeProvider>
+          <RouterProvider router={router}></RouterProvider>
+        </ThemeProvider>
       </DbProviders>
     </AuthProviders>
   </StrictMode>

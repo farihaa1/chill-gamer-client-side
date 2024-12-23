@@ -2,31 +2,51 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../providers/AuthProviders";
+import { DbContext } from "../providers/DbProviders";
 
 const AddReviewPage = () => {
   const { user } = useContext(AuthContext);
-  const [review, setReview] = useState({
-    coverImage: "",
-    title: "",
-    description: "",
-    rating: "",
-    year: "",
-    genre: "",
-  });
+  const { review, setReview } = useContext(DbContext);
+
   const navigate = useNavigate();
 
-  const genres = ["Action", "RPG", "Adventure", "Puzzle", "Shooter"]; // Add more genres as needed
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setReview((prev) => ({ ...prev, [name]: value }));
-  };
+  const genres = ["Action", "RPG", "Adventure", "Puzzle", "Shooter"];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const form = e.target;
+    const coverImage = form.coverImage.value;
+    const title = form.title.value;
+    const description = form.description.value;
+    const rating = parseInt(form.rating.value);
+    const year = parseInt(form.year.value);
+    const genre = form.genre.value;
+
+    if (rating < 1 || rating > 10) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Rating",
+        text: "Rating must be between 1 and 10.",
+      });
+      return;
+    }
+    const currentYear = new Date().getFullYear();
+    if (year < 1900 || year > currentYear) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Year",
+        text: `Year must be between 1900 and ${currentYear}.`,
+      });
+      return;
+    }
 
     const reviewData = {
-      ...review,
+      coverImage,
+      title,
+      description,
+      rating,
+      year,
+      genre,
       email: user?.email,
       name: user?.displayName,
     };
@@ -41,19 +61,16 @@ const AddReviewPage = () => {
       });
 
       if (response.ok) {
+        const newReview = await response.json();
+
+        setReview([...review, newReview]);
+
         Swal.fire({
           icon: "success",
           title: "Review Submitted",
           text: "Your review has been added successfully!",
         });
-        setReview({
-          coverImage: "",
-          title: "",
-          description: "",
-          rating: "",
-          year: "",
-          genre: "",
-        });
+
         navigate("/all-review");
       } else {
         throw new Error("Failed to submit review");
@@ -86,8 +103,6 @@ const AddReviewPage = () => {
             type="url"
             id="coverImage"
             name="coverImage"
-            value={review.coverImage}
-            onChange={handleChange}
             required
             className="w-full px-3 py-2 dark:text-gray-500 border rounded input input-bordered"
           />
@@ -101,8 +116,6 @@ const AddReviewPage = () => {
             type="text"
             id="title"
             name="title"
-            value={review.title}
-            onChange={handleChange}
             required
             className="w-full px-3 py-2 border rounded input input-bordered dark:text-gray-500"
           />
@@ -115,24 +128,20 @@ const AddReviewPage = () => {
           <textarea
             id="description"
             name="description"
-            value={review.description}
-            onChange={handleChange}
             required
-            rows="4"
+            rows="5"
             className="w-full px-3 py-2 dark:text-gray-500 border rounded input input-bordered"
           ></textarea>
         </div>
 
         <div>
-          <label className="block font-medium mb-1" htmlFor="rating">
-            Rating (1-100)
+          <label className="block font-medium mb-1" >
+            Rating (1-10)
           </label>
           <input
-            type="number"
+            type="text"
             id="rating"
             name="rating"
-            value={review.rating}
-            onChange={handleChange}
             required
             min="1"
             max="10"
@@ -141,15 +150,13 @@ const AddReviewPage = () => {
         </div>
 
         <div>
-          <label className="block font-medium mb-1" htmlFor="year">
+          <label className="block font-medium mb-1">
             Publishing Year
           </label>
           <input
-            type="number"
+            type="text"
             id="year"
             name="year"
-            value={review.year}
-            onChange={handleChange}
             required
             min="1900"
             max={new Date().getFullYear()}
@@ -164,8 +171,6 @@ const AddReviewPage = () => {
           <select
             id="genre"
             name="genre"
-            value={review.genre}
-            onChange={handleChange}
             required
             className="w-full px-3 py-2 dark:text-gray-500 border rounded input input-bordered"
           >

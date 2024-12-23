@@ -55,7 +55,7 @@ const MainLayout = () => {
       </nav>
 
     
-      <main>
+      <main className="min-h-screen">
         <Outlet />
       </main>
 

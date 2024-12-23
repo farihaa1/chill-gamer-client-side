@@ -1,20 +1,42 @@
-import React, { useContext } from "react";
-import { useLoaderData } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProviders";
 
 const GameWatchListPage = () => {
-  const watchListWithEmail = useLoaderData();
   const { user } = useContext(AuthContext);
+  const [watchListWithEmail, setWatchListWithEmail] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const filteredWatchList = watchListWithEmail.filter(
-    (item) => item.userEmail === user?.email
-  );
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    if (!user) {
+      setIsLoading(true);
+    }
+
+    fetch(`https://chill-gamer-server-side-jet.vercel.app/watch-list?userEmail=${user.email}`)
+      .then((response) => response.json())
+      .then((watchList) => {
+        setWatchListWithEmail(watchList);
+        setIsLoading(false);
+        
+      })
+      .catch((error) => console.error("Error fetching watch-list:", error));
+      return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h2 className="text-3xl font-bold text-center mb-6">My Watch List</h2>
-      {filteredWatchList.length === 0 ? (
-        <p className="text-center text-lg text-red-500">You haven’t added anything to your watchlist yet.</p>
+      {isLoading ? (
+        <div className="flex justify-center items-center min-h-screen">
+          <span className="loading loading-ring text-blue-800 w-32 h-32"></span>
+        </div>
+      ) : watchListWithEmail.length === 0 ? (
+        <p className="text-center text-lg text-red-500">
+          You haven’t added anything to your watchlist yet.
+        </p>
       ) : (
         <table className="min-w-full table-auto border-collapse">
           <thead>
@@ -27,7 +49,7 @@ const GameWatchListPage = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredWatchList.map((item) => (
+            {watchListWithEmail.map((item) => (
               <tr key={item._id}>
                 <td className="px-4 py-2 border-b">
                   <img
